@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instagram Unfollower Checker</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="static/style.css">
     <script>
         function checkUnfollowers() {
             var username = document.getElementById("username").value;
             var password = document.getElementById("password").value;
             
-            fetch('/check_unfollowers', {
+            fetch('https://your-app-name.herokuapp.com/check_unfollowers', {
                 method: 'POST',
                 body: new URLSearchParams({
                     'username': username,
