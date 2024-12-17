@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Unfollower Checker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        function checkUnfollowers() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            
+            fetch('/check_unfollowers', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    'username': username,
+                    'password': password
+                }),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.unfollowers) {
+                    var resultDiv = document.getElementById("result");
+                    resultDiv.innerHTML = "<h2>Unfollowers:</h2><ul>";
+                    data.unfollowers.forEach(function(username) {
+                        resultDiv.innerHTML += "<li>" + username + "</li>";
+                    });
+                    resultDiv.innerHTML += "</ul>";
+                } else if (data.error) {
+                    alert(data.error);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Instagram Unfollower Checker</h1>
+        <p>Enter your Instagram credentials to find out who unfollowed you.</p>
+        <input type="text" id="username" placeholder="Instagram Username" required>
+        <input type="password" id="password" placeholder="Instagram Password" required>
+        <button onclick="checkUnfollowers()">Check Unfollowers</button>
+        
+        <div id="result"></div>
+    </div>
+</body>
+</html>
